@@ -30,4 +30,9 @@ public class PeopleController {
         return null;
     }
 
+    @GetMapping("/export")
+    public void export(){
+        peopleService.exportFile();
+    }
+
 }

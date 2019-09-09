@@ -14,4 +14,10 @@ import java.util.List;
 public interface IPeopleService extends IService<People> {
 
     List<People> queryAll();
+
+    //void addFile(File file);
+
+    void exportFile();
+
+    void importFile();
 }

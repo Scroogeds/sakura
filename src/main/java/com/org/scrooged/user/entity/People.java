@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @description
  * @date 2019/1/16 15:13
  */
-@TableName(value = "USERS.t_people")
+@TableName(value = "t_people")
 public class People extends Model<People> implements Serializable {
 
     @TableId

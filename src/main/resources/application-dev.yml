@@ -1,12 +1,13 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.101.149:35432/gmpcloud
-    username: postgres
-    password: bcx12345
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/users?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    #type: com.alibaba.druid.pool.DruidDataSource
 
 mybatis-plus:
-  mapper-locations: classpath:/user/dao/*Dao.xml
+  mapper-locations: classpath:com/org/scrooged/user/dao/*Dao.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.org.scrooged.user.entity
   #typeEnumsPackage: cn.org.scrooged.entity.enums
