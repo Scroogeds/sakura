@@ -4,7 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/users?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
-    #type: com.alibaba.druid.pool.DruidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
 
 mybatis-plus:
   mapper-locations: classpath:com/org/scrooged/user/dao/*Dao.xml

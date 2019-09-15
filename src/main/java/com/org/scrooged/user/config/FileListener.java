@@ -1,5 +1,6 @@
 package com.org.scrooged.user.config;
 
+import com.org.scrooged.user.entity.ExportEntity;
 import com.org.scrooged.user.service.IPeopleService;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -39,7 +40,16 @@ public class FileListener extends FileAlterationListenerAdaptor {
     @Override
     public void onFileCreate(File file) {
         log.info("[新建]:" + file.getAbsolutePath());
-        fileServices.forEach(fileService -> fileService.addFile(file));
+        List<ExportEntity> exportEntities = FileParserUtils.parserEntity(file);
+        new Thread(() -> fileServices.forEach(fileService ->
+                fileService.exportEntities(exportEntities))).start();
+        /*fileServices.forEach(fileService -> {
+            try {
+                fileService.addFile(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });*/
         //fileService.addFile(file);
     }
 

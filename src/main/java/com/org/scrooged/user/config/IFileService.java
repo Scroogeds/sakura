@@ -1,6 +1,9 @@
 package com.org.scrooged.user.config;
 
+import com.org.scrooged.user.entity.ExportEntity;
+
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>Title: IFileService</p>
@@ -15,4 +18,10 @@ import java.io.File;
  */
 public interface IFileService {
     void addFile(File file);
+
+    void exportEntities(List<ExportEntity> exportEntities);
+
+    default void exportEntity(List<ExportEntity> exportEntities){
+
+    }
 }

@@ -29,6 +29,13 @@ public class PeopleServiceImpl extends ServiceImpl<PeopleDao, People> implements
     }
 
     @Override
+    public People getPeople(String pId) {
+        selectById("A102");
+        return selectById(pId);
+    }
+
+    @Override
+    //@Transactional(rollbackFor = Exception.class)
     public void addFile(File file) {
         System.out.println("--------------have a file-----------------");
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
@@ -39,21 +46,35 @@ public class PeopleServiceImpl extends ServiceImpl<PeopleDao, People> implements
                 //People p = JSON.parseObject(((Map)JSON.parse(txt)).get("t").toString(), People.class);
                 ExportEntity exportEntity = JSON.parseObject(txt, ExportEntity.class);
                 if ("update".equals(exportEntity.getOperate())) {
-                    updateById((People) exportEntity.getT());
+                    updateById(JSON.parseObject(exportEntity.getData().toString(), People.class));
                     //updateById(JSON.parseObject(exportEntity.getT().toString(), People.class));
                 }else if ("insert".equals(exportEntity.getOperate())) {
-                    insert(JSON.parseObject(exportEntity.getT().toString(), People.class));
+                    insert(JSON.parseObject(exportEntity.getData().toString(), People.class));
                 } else {
-                    deleteById(JSON.parseObject(exportEntity.getT().toString(), People.class).getpId());
+                    deleteById(JSON.parseObject(exportEntity.getData().toString(), People.class).getpId());
                 }
                 //System.out.println(exportEntity.getT());
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //System.out.println(10/0);
     }
+
+    @Override
+    public void exportEntities(List<ExportEntity> exportEntities) {
+        exportEntities.forEach(exportEntity -> {
+            if ("update".equals(exportEntity.getOperate())) {
+                updateById(JSON.parseObject(exportEntity.getData().toString(), People.class));
+            }else if ("insert".equals(exportEntity.getOperate())) {
+                insert(JSON.parseObject(exportEntity.getData().toString(), People.class));
+            } else {
+                deleteById(JSON.parseObject(exportEntity.getData().toString(), People.class).getpId());
+            }
+        });
+
+    }
+
 
     @Override
     public void exportFile() {
@@ -63,16 +84,14 @@ public class PeopleServiceImpl extends ServiceImpl<PeopleDao, People> implements
         File file = new File("/Users/luyangqian/file-listen/people.txt");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)))) {
             for (People people : peoples) {
-                ExportEntity<People> exportEntity = new ExportEntity<>();
+                ExportEntity exportEntity = new ExportEntity();
                 exportEntity.setOperate("update");
-                exportEntity.setT(people);
+                exportEntity.setData(people);
                 //exportEntities.add(exportEntity);
                 //buffer.append(JSON.toJSONString(exportEntity));
                 bufferedWriter.write(JSON.toJSONString(exportEntity));
                 bufferedWriter.newLine();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

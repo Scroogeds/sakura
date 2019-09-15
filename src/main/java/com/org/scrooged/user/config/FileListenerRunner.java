@@ -24,13 +24,17 @@ public class FileListenerRunner implements CommandLineRunner {
     private FileListenerFactory fileListenerFactory;
 
     @Autowired
-    private IFileService fileService;
+    private IFileService peopleServiceImpl;
+
+    @Autowired
+    private IFileService userServiceImpl;
 
     @Override
     public void run(String... strings) throws Exception {
         // 创建监听者
         System.out.println("fileListenerFactory= "+fileListenerFactory);
-        FileAlterationMonitor fileAlterationMonitor = fileListenerFactory.getMonitor(fileService);
+        FileAlterationMonitor fileAlterationMonitor = fileListenerFactory
+                .getMonitor(peopleServiceImpl, userServiceImpl);
         try {
             // do not stop this thread
             fileAlterationMonitor.start();

@@ -11,11 +11,21 @@ package com.org.scrooged.user.entity;
  *          2019-08-27   luyangqian  Created
  * </pre>
  */
-public class ExportEntity<T> {
+public class ExportEntity {
+
+    private String className;
 
     private String operate;
 
-    private T t;
+    private Object data;
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     public String getOperate() {
         return operate;
@@ -25,11 +35,11 @@ public class ExportEntity<T> {
         this.operate = operate;
     }
 
-    public T getT() {
-        return t;
+    public Object getData() {
+        return data;
     }
 
-    public void setT(T t) {
-        this.t = t;
+    public void setData(Object data) {
+        this.data = data;
     }
 }

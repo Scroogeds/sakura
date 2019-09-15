@@ -25,6 +25,11 @@ public class PeopleController {
         return peopleService.queryAll();
     }
 
+    @GetMapping("/people/{pId}")
+    public People getPeopleByPId(@PathVariable("pId") String pId){
+        return peopleService.getPeople(pId);
+    }
+
     @PostMapping("/people")
     public People addPeople(@RequestBody People people){
         return null;

@@ -17,6 +17,8 @@ public interface IPeopleService extends IService<People> {
 
     //void addFile(File file);
 
+    People getPeople(String pId);
+
     void exportFile();
 
     void importFile();
